@@ -18,7 +18,6 @@ export default class Board extends Component {
     let boardArray = [];
     const pairs = [...this.state.pieces, ...this.state.pieces];
     const shuffledPairs =  _.shuffle(pairs);
-    console.log(shuffledPairs)
     for(let row = 0; row < boardSize; row++) {
       boardArray[row] = [];
       for(let square = 0; square < boardSize; square++) {
@@ -30,15 +29,25 @@ export default class Board extends Component {
   }
 
   loadBoard() {
-    
+    let board = this.generateBoard().map((row, index) => {
+      return (
+        <tr key={index}>
+          {row.map((cell, index) => <td key={index}>{cell}</td>)}
+        </tr>
+      )
+    })
+    return board;
   }
 
   render() {
-    console.log(this.generateBoard())
     return (
       <div>
         <h5>This Will be the board Component</h5>
-        <Card face={this.state.pieces[0]}/>
+        <table>
+          <tbody>
+            {this.loadBoard()}
+          </tbody>
+        </table>
       </div>
     )
   }
